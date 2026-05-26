@@ -1,0 +1,16 @@
+{
+    "Ads": true,
+    "Departments": true,
+    "Coupons": true,
+    "Doctors": true,
+    "Categories": true,
+    "Assurance": true,
+    "Clinics": true,
+    "Transactions": true,
+    "Products": true,
+    "Locations": true,
+    "Orders": true,
+    "Documentation": true,
+    "Purchases": true,
+    "Blog": true
+}

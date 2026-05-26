@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/assurance",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Assurance\\": "app/",
+            "Modules\\Assurance\\Database\\Factories\\": "database/factories/",
+            "Modules\\Assurance\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Assurance\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,0 +1,41 @@
+<?php
+
+namespace Modules\Products\Resources;
+
+use Illuminate\Http\Request;
+use Modules\Products\Models\Product;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+
+class ProductResource extends JsonResource
+{
+  /** @mixin Product */
+  public function toArray(Request $request): array
+  {
+    return [
+      'id' => $this->id,
+      'category_id' => $this->category_id,
+      'unit_id' => $this->unit_id,
+      'name' => $this->name,
+      'scientific_name' => $this->scientific_name,
+      'image' => $this->getFirstMediaUrl(Product::Image),
+      'category' => $this->category?->name,
+      'price' => number_format($this->price, 2),
+      'unit_name' => $this->unit?->name,
+      'unit_count' => $this->unit_count,
+      'unit_type' => $this->unit_count . ' ' . $this->unit?->name,
+      'status' => $this->status,
+      'description' => $this->description,
+      'is_compensable' => $this->is_compensable,
+      'with_prescription' => $this->with_prescription,
+      'is_discounted' => $this->is_discounted,
+      'discount_amount' => $this->discount_amount,
+      'final_price' => $this->final_price,
+      'in_cart' => $this->in_cart,
+      'cart_quantity' => $this->cart_quantity,
+      'stock_quantity' => $this->stock_quantity,
+      'created_at' => $this->created_at,
+      'updated_at' => $this->updated_at,
+    ];
+  }
+}

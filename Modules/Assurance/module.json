@@ -1,0 +1,11 @@
+{
+    "name": "Assurance",
+    "alias": "assurance",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Assurance\\Providers\\AssuranceServiceProvider"
+    ],
+    "files": []
+}
