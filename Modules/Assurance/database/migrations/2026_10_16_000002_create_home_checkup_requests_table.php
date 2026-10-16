@@ -14,6 +14,9 @@ return new class extends Migration {
       $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
       $table->foreignId('location_id')->constrained('locations')->restrictOnDelete();
       $table->string('patient_number')->nullable();
+      $table->string('patient_fullname');
+      $table->string('patient_phone');
+      $table->date('patient_birthdate')->nullable();
       $table->text('notes')->nullable();
       $table->date('preferred_date');
       $table->time('preferred_time')->nullable();

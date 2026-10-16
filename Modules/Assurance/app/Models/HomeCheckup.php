@@ -19,6 +19,9 @@ class HomeCheckup extends Model
     'user_id',
     'location_id',
     'patient_number',
+    'patient_fullname',
+    'patient_phone',
+    'patient_birthdate',
     'notes',
     'preferred_date',
     'preferred_time',
@@ -32,6 +35,9 @@ class HomeCheckup extends Model
 
   protected $casts = [
     'patient_number' => 'string',
+    'patient_fullname' => 'string',
+    'patient_phone' => 'string',
+    'patient_birthdate' => 'date',
     'preferred_date' => 'date',
     'preferred_time' => 'string',
     'status' => 'string',
