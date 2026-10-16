@@ -14,6 +14,8 @@ class AssuranceDatabaseSeeder extends Seeder
   public function run(): void
   {
     $this->call(HomeServiceSeeder::class);
+    $this->call(HomeCheckupSeeder::class);
+    $this->call(HomeCheckupSettingsSeeder::class);
 
     if (env('APP_ENV') === 'local') {
       $services = MedicalService::factory()->count(5)->create();

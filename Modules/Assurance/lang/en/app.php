@@ -77,4 +77,25 @@ return [
   'no-transactions' => 'No transactions found for this client.',
   'amount_added_successfully' => 'Amount added successfully to the client\'s wallet.',
   'insurance-card' => 'Insurance Card',
+
+  // home checkup
+  'home_checkup' => [
+    'statuses' => [
+      'pending' => 'Pending',
+      'approved' => 'Approved',
+      'rejected' => 'Rejected',
+      'cancelled' => 'Cancelled',
+    ],
+    'visit_types' => [
+      'nurse_only' => 'Nurse Only',
+      'with_doctor' => 'With Doctor',
+    ],
+    'created_successfully' => 'Home checkup request created successfully.',
+    'status_updated' => 'Home checkup status updated successfully.',
+    'deleted_successfully' => 'Home checkup request deleted successfully.',
+    'only_admin_can_review' => 'Only administrators can approve or reject requests.',
+    'cannot_cancel_others' => 'You cannot cancel another user\'s request.',
+    'only_pending_can_cancel' => 'Only pending requests can be cancelled.',
+    'cannot_delete_others' => 'You cannot delete another user\'s request.',
+  ],
 ];

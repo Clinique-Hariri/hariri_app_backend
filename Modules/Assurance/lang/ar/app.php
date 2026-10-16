@@ -78,4 +78,25 @@ return [
   'no-transactions' => 'لا توجد معاملات لهذا الزبون.',
   'amount_added_successfully' => 'تم إضافة المبلغ بنجاح إلى محفظة الزبون.',
   'insurance-card' => 'بطاقة التأمين',
+
+  // home checkup
+  'home_checkup' => [
+    'statuses' => [
+      'pending' => 'قيد الانتظار',
+      'approved' => 'مقبول',
+      'rejected' => 'مرفوض',
+      'cancelled' => 'ملغي',
+    ],
+    'visit_types' => [
+      'nurse_only' => 'ممرض فقط',
+      'with_doctor' => 'مع طبيب',
+    ],
+    'created_successfully' => 'تم إنشاء طلب الفحص المنزلي بنجاح.',
+    'status_updated' => 'تم تحديث حالة الفحص المنزلي بنجاح.',
+    'deleted_successfully' => 'تم حذف طلب الفحص المنزلي بنجاح.',
+    'only_admin_can_review' => 'يمكن للمشرفين فقط قبول أو رفض الطلبات.',
+    'cannot_cancel_others' => 'لا يمكنك إلغاء طلب مستخدم آخر.',
+    'only_pending_can_cancel' => 'يمكن إلغاء الطلبات قيد الانتظار فقط.',
+    'cannot_delete_others' => 'لا يمكنك حذف طلب مستخدم آخر.',
+  ],
 ];

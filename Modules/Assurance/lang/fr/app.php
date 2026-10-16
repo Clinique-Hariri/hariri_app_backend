@@ -77,4 +77,25 @@ return [
   'no-transactions' => 'Aucune transaction trouvée pour ce client.',
   'amount_added_successfully' => 'Montant ajouté avec succès au portefeuille du client.',
   'insurance-card' => 'Carte d\'assurance',
+
+  // home checkup
+  'home_checkup' => [
+    'statuses' => [
+      'pending' => 'En attente',
+      'approved' => 'Approuvé',
+      'rejected' => 'Rejeté',
+      'cancelled' => 'Annulé',
+    ],
+    'visit_types' => [
+      'nurse_only' => 'Infirmier uniquement',
+      'with_doctor' => 'Avec médecin',
+    ],
+    'created_successfully' => 'Demande de visite à domicile créée avec succès.',
+    'status_updated' => 'Statut de la visite à domicile mis à jour avec succès.',
+    'deleted_successfully' => 'Demande de visite à domicile supprimée avec succès.',
+    'only_admin_can_review' => 'Seuls les administrateurs peuvent approuver ou rejeter les demandes.',
+    'cannot_cancel_others' => 'Vous ne pouvez pas annuler la demande d\'un autre utilisateur.',
+    'only_pending_can_cancel' => 'Seules les demandes en attente peuvent être annulées.',
+    'cannot_delete_others' => 'Vous ne pouvez pas supprimer la demande d\'un autre utilisateur.',
+  ],
 ];

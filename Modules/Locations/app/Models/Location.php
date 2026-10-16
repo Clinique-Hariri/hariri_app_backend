@@ -31,4 +31,9 @@ class Location extends Model
   {
     return $this->belongsTo(User::class);
   }
+
+  public static function factory()
+  {
+    return \Modules\Locations\Database\Factories\LocationFactory::new();
+  }
 }
