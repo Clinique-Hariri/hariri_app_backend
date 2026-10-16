@@ -22,7 +22,7 @@ class ProductFactory extends Factory
             'unit_id' => $this->faker->randomElement($units),
             'name' => $this->faker->word(),
             'barcode' => $this->faker->ean13(),
-            'reference' => $this->faker->unique()->regexify('[A-Z]{3}[0-9]{5}'),
+            //'reference' => $this->faker->unique()->regexify('[A-Z]{3}[0-9]{5}'),
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'unit_count' => $this->faker->numberBetween(1, 100),
             'description' => $this->faker->paragraph(),
