@@ -98,4 +98,11 @@ return [
     'only_pending_can_cancel' => 'Only pending requests can be cancelled.',
     'cannot_delete_others' => 'You cannot delete another user\'s request.',
   ],
+
+  // home service
+  'home_service' => [
+    'created_successfully' => 'Home service created successfully.',
+    'updated_successfully' => 'Home service updated successfully.',
+    'deleted_successfully' => 'Home service deleted successfully.',
+  ],
 ];

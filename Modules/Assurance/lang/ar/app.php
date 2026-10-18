@@ -99,4 +99,11 @@ return [
     'only_pending_can_cancel' => 'يمكن إلغاء الطلبات قيد الانتظار فقط.',
     'cannot_delete_others' => 'لا يمكنك حذف طلب مستخدم آخر.',
   ],
+
+  // home service
+  'home_service' => [
+    'created_successfully' => 'تم إنشاء الخدمة المنزلية بنجاح.',
+    'updated_successfully' => 'تم تحديث الخدمة المنزلية بنجاح.',
+    'deleted_successfully' => 'تم حذف الخدمة المنزلية بنجاح.',
+  ],
 ];

@@ -7,9 +7,13 @@ use Modules\Assurance\Http\Controllers\Api\HomeServiceApiController;
 
 Route::group(['prefix' => 'v1'], function () {
   Route::get('home-services', [HomeServiceApiController::class, 'index']);
+  Route::get('home-services/{homeService}', [HomeServiceApiController::class, 'show']);
   Route::get('home-checkups/visit-types', [HomeCheckupApiController::class, 'visitTypes']);
 
   Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('home-services', [HomeServiceApiController::class, 'store']);
+    Route::put('home-services/{homeService}', [HomeServiceApiController::class, 'update']);
+    Route::delete('home-services/{homeService}', [HomeServiceApiController::class, 'destroy']);
     Route::get('family-members', [AssuranceApiController::class, 'getFamilyMembers']);
     Route::get('account-statement', [AssuranceApiController::class, 'getAccountStatement']);
     Route::get('examinations', [AssuranceApiController::class, 'getExaminations']);

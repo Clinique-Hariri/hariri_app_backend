@@ -98,4 +98,11 @@ return [
     'only_pending_can_cancel' => 'Seules les demandes en attente peuvent être annulées.',
     'cannot_delete_others' => 'Vous ne pouvez pas supprimer la demande d\'un autre utilisateur.',
   ],
+
+  // home service
+  'home_service' => [
+    'created_successfully' => 'Service à domicile créé avec succès.',
+    'updated_successfully' => 'Service à domicile mis à jour avec succès.',
+    'deleted_successfully' => 'Service à domicile supprimé avec succès.',
+  ],
 ];
