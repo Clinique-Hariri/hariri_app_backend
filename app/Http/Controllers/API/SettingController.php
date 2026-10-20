@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Exception;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
@@ -34,6 +35,24 @@ use ApiResponseTrait;
     ];
     $settings = Setting::whereIn('key', $api_settings)->pluck('value', 'key');
     return $this->successResponse(data: $settings);
+  }
+
+  public function store(Request $request)
+  {
+    $validated = $this->validateRequest($request, [
+      'home_checkup_nurse_only_price' => 'required|numeric|min:0',
+      'home_checkup_with_doctor_price' => 'required|numeric|min:0',
+    ]);
+
+    try {
+      foreach ($validated as $key => $value) {
+        Setting::updateOrInsert(['key' => $key], ['value' => $value]);
+      }
+
+      return $this->successResponse('Settings updated successfully.', data: $validated);
+    } catch (Exception $e) {
+      return $this->errorResponse($e->getMessage());
+    }
   }
 
 }

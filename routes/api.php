@@ -42,6 +42,7 @@ Route::prefix('v1')->group(function () {
   });
 
   Route::get('settings', [SettingController::class, 'index']);
+  Route::post('settings', [SettingController::class, 'store']);
 
   Route::prefix('firebase')->group(function () {
     Route::post('id-token', [FirebaseController::class, 'idToken']);
