@@ -51,7 +51,6 @@ class User extends Authenticatable implements HasMedia
     'full_address',
     'city_id',
     'status',
-    'is_admin',
     'is_insured',
     'insurance_date',
     'passport_number',
@@ -70,8 +69,8 @@ class User extends Authenticatable implements HasMedia
     'remember_token',
   ];
 
-  protected $attributes = [
-    'is_admin' => false,
+  protected $appends = [
+    'is_admin',
   ];
 
   /**
@@ -82,7 +81,6 @@ class User extends Authenticatable implements HasMedia
   protected $casts = [
     'birthdate' => 'date',
     'email_verified_at' => 'datetime',
-    'is_admin' => 'boolean',
     'is_insured' => 'boolean',
     'insurance_date' => 'date',
   ];
@@ -120,6 +118,11 @@ class User extends Authenticatable implements HasMedia
   public function getFullnameAttribute()
   {
     return $this->firstname . ' ' . $this->lastname;
+  }
+
+  public function getIsAdminAttribute(): bool
+  {
+    return $this->type === UserTypes::ADMIN;
   }
 
   public function getAvatarUrlAttribute()
