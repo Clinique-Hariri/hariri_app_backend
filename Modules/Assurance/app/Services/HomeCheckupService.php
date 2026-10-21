@@ -3,7 +3,6 @@
 namespace Modules\Assurance\Services;
 
 use App\Models\User;
-use App\Support\Enum\PermissionNames;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -21,7 +20,7 @@ class HomeCheckupService
       ->with(['location', 'services']);
 
     // Admins see all requests; regular users only see their own.
-    if (!$user->hasPermissionTo(PermissionNames::MANAGE_EXAMINATIONS)) {
+    if (!$user->is_admin) {
       $query->where('user_id', $user->id);
     }
 
@@ -93,7 +92,7 @@ class HomeCheckupService
 
   public function updateStatus(HomeCheckup $homeCheckup, User $actor, string $status, ?string $rejectionReason = null): HomeCheckup
   {
-    $isAdmin = $actor->hasPermissionTo(PermissionNames::MANAGE_EXAMINATIONS);
+    $isAdmin = $actor->is_admin;
 
     // Only admins may approve or reject.
     if (in_array($status, [Status::APPROVED, Status::REJECTED], true) && !$isAdmin) {
@@ -121,7 +120,7 @@ class HomeCheckupService
 
   public function delete(HomeCheckup $homeCheckup, User $actor): void
   {
-    $isAdmin = $actor->hasPermissionTo(PermissionNames::MANAGE_EXAMINATIONS);
+    $isAdmin = $actor->is_admin;
 
     if (!$isAdmin && $homeCheckup->user_id !== $actor->id) {
       abort(403, __('assurance::app.home_checkup.cannot_delete_others'));
