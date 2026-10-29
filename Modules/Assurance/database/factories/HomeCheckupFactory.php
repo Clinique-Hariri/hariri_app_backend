@@ -30,6 +30,7 @@ class HomeCheckupFactory extends Factory
       'status' => $this->faker->randomElement(Status::all()),
       'visit_type' => $visitType,
       'reviewed_at' => null,
+      'scheduled_at' => null,
       'rejection_reason' => null,
       'base_price' => VisitType::get_price($visitType),
       'total_price' => $this->faker->randomFloat(2, 0, 5000),
@@ -50,6 +51,7 @@ class HomeCheckupFactory extends Factory
     return $this->state(fn (array $attributes) => [
       'status' => Status::APPROVED,
       'reviewed_at' => now(),
+      'scheduled_at' => now()->addDay(),
       'rejection_reason' => null,
     ]);
   }

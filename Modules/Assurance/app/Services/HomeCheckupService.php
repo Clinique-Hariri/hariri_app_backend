@@ -92,7 +92,7 @@ class HomeCheckupService
     });
   }
 
-  public function updateStatus(HomeCheckup $homeCheckup, User $actor, string $status, ?string $rejectionReason = null): HomeCheckup
+  public function updateStatus(HomeCheckup $homeCheckup, User $actor, string $status, ?string $rejectionReason = null, ?string $scheduledAt = null): HomeCheckup
   {
     $isAdmin = $actor->is_admin;
 
@@ -115,6 +115,7 @@ class HomeCheckupService
       'status' => $status,
       'rejection_reason' => $status === Status::REJECTED ? $rejectionReason : null,
       'reviewed_at' => in_array($status, [Status::APPROVED, Status::REJECTED], true) ? now() : $homeCheckup->reviewed_at,
+      'scheduled_at' => $status === Status::APPROVED ? $scheduledAt : null,
     ]);
 
     return $homeCheckup->load(['location', 'services']);

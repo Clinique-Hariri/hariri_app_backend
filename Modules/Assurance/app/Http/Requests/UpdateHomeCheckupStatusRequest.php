@@ -12,6 +12,7 @@ class UpdateHomeCheckupStatusRequest extends FormRequest
     return [
       'status' => ['required', 'in:' . implode(',', Status::all())],
       'rejection_reason' => ['required_if:status,' . Status::REJECTED, 'nullable', 'string'],
+      'scheduled_at' => ['required_if:status,' . Status::APPROVED, 'nullable', 'date'],
     ];
   }
 

@@ -25,6 +25,7 @@ class HomeCheckupResource extends JsonResource
       'status' => $this->status,
       'visit_type' => $this->visit_type,
       'reviewed_at' => $this->reviewed_at,
+      'scheduled_at' => $this->scheduled_at,
       'rejection_reason' => $this->rejection_reason,
       'base_price' => $this->base_price,
       'total_price' => $this->total_price,

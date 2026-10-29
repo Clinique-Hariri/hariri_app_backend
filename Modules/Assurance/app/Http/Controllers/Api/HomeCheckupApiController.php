@@ -49,6 +49,7 @@ class HomeCheckupApiController extends Controller
       auth()->user(),
       $data['status'],
       $data['rejection_reason'] ?? null,
+      $data['scheduled_at'] ?? null,
     );
 
     return $this->successResponse(
