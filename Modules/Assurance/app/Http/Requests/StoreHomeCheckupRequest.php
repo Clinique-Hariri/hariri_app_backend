@@ -22,8 +22,8 @@ class StoreHomeCheckupRequest extends FormRequest
       'preferred_date' => ['required', 'date', 'after_or_equal:today'],
       'preferred_time' => ['nullable', 'date_format:H:i'],
       'visit_type' => ['nullable', 'in:' . implode(',', VisitType::all())],
-      'service_ids' => ['required', 'array', 'min:1'],
-      'service_ids.*' => ['required', 'integer', 'exists:home_services,id'],
+      'service_ids' => ['nullable', 'array'],
+      'service_ids.*' => ['integer', 'exists:home_services,id'],
     ];
   }
 

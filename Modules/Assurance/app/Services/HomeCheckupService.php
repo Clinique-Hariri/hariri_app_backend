@@ -47,8 +47,10 @@ class HomeCheckupService
         'status' => \Modules\Locations\Constants\Status::ACTIVE,
       ]);
 
+      $serviceIds = $data['service_ids'] ?? [];
+
       $homeServices = HomeService::query()
-        ->whereIn('id', $data['service_ids'])
+        ->whereIn('id', $serviceIds)
         ->get()
         ->keyBy('id');
 
@@ -72,7 +74,7 @@ class HomeCheckupService
         'total_price' => $totalPrice,
       ]);
 
-      foreach ($data['service_ids'] as $serviceId) {
+      foreach ($serviceIds as $serviceId) {
         $service = $homeServices->get($serviceId);
 
         if (!$service) {
