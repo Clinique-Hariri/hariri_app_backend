@@ -18,6 +18,7 @@ return [
         'family_member_added' => 'تم إضافة فرد عائلة جديد',
         'medical_visit_added' => 'تم إضافة زيارة طبية جديدة',
         'home_checkup_scheduled' => 'تم جدولة الفحص المنزلي',
+        'home_checkup_reminder' => 'تذكير بالفحص المنزلي',
     ],
 
     'bodies' => [
@@ -37,5 +38,6 @@ return [
         'family_member_added' => 'تم إضافة :family_member_name إلى قائمة أفراد عائلتك.',
         'medical_visit_added' => 'تم إضافة زيارة طبية جديدة لـ :family_member_name في :date.',
         'home_checkup_scheduled' => 'تم جدولة الفحص المنزلي الخاص بك في :date الساعة :time.',
+        'home_checkup_reminder' => 'تذكير: موعد الفحص المنزلي الخاص بك قريب في :date الساعة :time.',
     ],
 ];

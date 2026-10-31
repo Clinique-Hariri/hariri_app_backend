@@ -29,6 +29,7 @@ class HomeCheckup extends Model
     'visit_type',
     'reviewed_at',
     'scheduled_at',
+    'reminder_sent_at',
     'rejection_reason',
     'base_price',
     'total_price',
@@ -45,6 +46,7 @@ class HomeCheckup extends Model
     'visit_type' => 'string',
     'reviewed_at' => 'datetime',
     'scheduled_at' => 'datetime',
+    'reminder_sent_at' => 'datetime',
     'base_price' => 'float',
     'total_price' => 'float',
   ];

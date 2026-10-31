@@ -43,7 +43,9 @@ class AssuranceServiceProvider extends ServiceProvider
      */
     protected function registerCommands(): void
     {
-        // $this->commands([]);
+        $this->commands([
+            \Modules\Assurance\Console\Commands\SendHomeCheckupRemindersCommand::class,
+        ]);
     }
 
     /**

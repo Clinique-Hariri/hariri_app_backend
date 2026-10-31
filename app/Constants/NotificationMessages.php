@@ -24,6 +24,7 @@ class NotificationMessages
     const string ORDER_ONGOING = 'order_ongoing';
     const string ORDER_DELIVERED = 'order_delivered';
     const string HOME_CHECKUP_SCHEDULED = 'home_checkup_scheduled';
+    const string HOME_CHECKUP_REMINDER = 'home_checkup_reminder';
 
     public static function titles(?string $locale = null): array
     {
@@ -47,6 +48,7 @@ class NotificationMessages
             self::ORDER_ONGOING => __('messages.titles.order_ongoing', [], $locale),
             self::ORDER_DELIVERED => __('messages.titles.order_delivered', [], $locale),
             self::HOME_CHECKUP_SCHEDULED => __('messages.titles.home_checkup_scheduled', [], $locale),
+            self::HOME_CHECKUP_REMINDER => __('messages.titles.home_checkup_reminder', [], $locale),
         ];
     }
 
@@ -73,6 +75,7 @@ class NotificationMessages
             self::ORDER_ONGOING => __('messages.bodies.order_ongoing', $replace, $locale),
             self::ORDER_DELIVERED => __('messages.bodies.order_delivered', $replace, $locale),
             self::HOME_CHECKUP_SCHEDULED => __('messages.bodies.home_checkup_scheduled', $replace, $locale),
+            self::HOME_CHECKUP_REMINDER => __('messages.bodies.home_checkup_reminder', $replace, $locale),
         ];
     }
 
