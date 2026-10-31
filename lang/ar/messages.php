@@ -17,6 +17,7 @@ return [
         'order_delivered' => 'تم التوصيل',
         'family_member_added' => 'تم إضافة فرد عائلة جديد',
         'medical_visit_added' => 'تم إضافة زيارة طبية جديدة',
+        'home_checkup_scheduled' => 'تم جدولة الفحص المنزلي',
     ],
 
     'bodies' => [
@@ -35,5 +36,6 @@ return [
         'order_delivered' => 'تم توصيل طلبك رقم :order_id بنجاح.',
         'family_member_added' => 'تم إضافة :family_member_name إلى قائمة أفراد عائلتك.',
         'medical_visit_added' => 'تم إضافة زيارة طبية جديدة لـ :family_member_name في :date.',
+        'home_checkup_scheduled' => 'تم جدولة الفحص المنزلي الخاص بك في :date الساعة :time.',
     ],
 ];

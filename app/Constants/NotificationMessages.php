@@ -23,6 +23,7 @@ class NotificationMessages
     const string ORDER_CANCELED = 'order_canceled';
     const string ORDER_ONGOING = 'order_ongoing';
     const string ORDER_DELIVERED = 'order_delivered';
+    const string HOME_CHECKUP_SCHEDULED = 'home_checkup_scheduled';
 
     public static function titles(?string $locale = null): array
     {
@@ -45,6 +46,7 @@ class NotificationMessages
             self::ORDER_CANCELED => __('messages.titles.order_canceled', [], $locale),
             self::ORDER_ONGOING => __('messages.titles.order_ongoing', [], $locale),
             self::ORDER_DELIVERED => __('messages.titles.order_delivered', [], $locale),
+            self::HOME_CHECKUP_SCHEDULED => __('messages.titles.home_checkup_scheduled', [], $locale),
         ];
     }
 
@@ -70,6 +72,7 @@ class NotificationMessages
             self::ORDER_CANCELED => __('messages.bodies.order_canceled', $replace, $locale),
             self::ORDER_ONGOING => __('messages.bodies.order_ongoing', $replace, $locale),
             self::ORDER_DELIVERED => __('messages.bodies.order_delivered', $replace, $locale),
+            self::HOME_CHECKUP_SCHEDULED => __('messages.bodies.home_checkup_scheduled', $replace, $locale),
         ];
     }
 

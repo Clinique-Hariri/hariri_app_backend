@@ -2,7 +2,9 @@
 
 namespace Modules\Assurance\Services;
 
+use App\Constants\NotificationMessages;
 use App\Models\User;
+use App\Notifications\NewMessageNotification;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -111,12 +113,31 @@ class HomeCheckupService
       }
     }
 
+    $isReviewStatus = in_array($status, [Status::APPROVED, Status::REJECTED], true);
+    $isStatusChanged = $homeCheckup->status !== $status;
+
     $homeCheckup->update([
       'status' => $status,
       'rejection_reason' => $status === Status::REJECTED ? $rejectionReason : null,
-      'reviewed_at' => in_array($status, [Status::APPROVED, Status::REJECTED], true) ? now() : $homeCheckup->reviewed_at,
+      'reviewed_at' => $isReviewStatus && $isStatusChanged ? now() : $homeCheckup->reviewed_at,
       'scheduled_at' => $status === Status::APPROVED ? $scheduledAt : null,
     ]);
+
+    if ($status === Status::APPROVED && $isStatusChanged) {
+      $homeCheckup->user?->notify(new NewMessageNotification(
+        key: NotificationMessages::HOME_CHECKUP_SCHEDULED,
+        data: [
+          'type' => 'home_checkups',
+          'home_checkup_id' => $homeCheckup->id,
+          'scheduled_at' => $homeCheckup->scheduled_at?->toDateTimeString(),
+        ],
+        channels: ['database', 'fcm'],
+        replace: [
+          'date' => $homeCheckup->scheduled_at?->format('Y-m-d'),
+          'time' => $homeCheckup->scheduled_at?->format('H:i'),
+        ],
+      ));
+    }
 
     return $homeCheckup->load(['location', 'services']);
   }

@@ -17,6 +17,7 @@ return [
         'order_delivered' => 'Commande livrée',
         'family_member_added' => 'Membre de la famille ajouté',
         'medical_visit_added' => 'Nouvelle visite médicale ajoutée',
+        'home_checkup_scheduled' => 'Visite à domicile planifiée',
     ],
 
     'bodies' => [
@@ -35,5 +36,6 @@ return [
         'order_delivered' => 'Votre commande :order_id a été livrée avec succès.',
         'family_member_added' => ':family_member_name a été ajouté à votre liste de membres de la famille.',
         'medical_visit_added' => 'Une nouvelle visite médicale a été ajoutée pour :family_member_name le :date.',
+        'home_checkup_scheduled' => 'Votre visite à domicile a été planifiée pour le :date à :time.',
       ],
 ];
