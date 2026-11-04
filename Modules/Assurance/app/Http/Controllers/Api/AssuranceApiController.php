@@ -72,7 +72,7 @@ class AssuranceApiController extends Controller
     ]);
 
     if (auth()->user()->is_insured){
-      $model = MedicalExamination::with(['familyMember', 'examinationServices'])
+      $model = MedicalExamination::with(['familyMember', 'examinationServices.media'])
         ->where('family_member_id', $data['family_member_id'])
         ->whereHas('familyMember', function ($query){
           $query->where('user_id', auth()->id());

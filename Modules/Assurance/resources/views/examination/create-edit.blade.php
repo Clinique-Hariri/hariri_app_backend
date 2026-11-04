@@ -154,12 +154,12 @@
                             @endforeach
                           </select>
                         </div>
-                        <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                        <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
                           <label class="form-label" for="form-repeater-1-2">@lang('assurance::app.name')<span class="text-danger fs-6 ms-1">*</span></label>
                           <input type="text" id="form-repeater-1-2" name="service_name" class="form-control"
                                  placeholder="@lang('assurance::app.name')" />
                         </div>
-                        <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                        <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
                           <label class="form-label" for="form-repeater-2-3">@lang('assurance::app.price')<span class="text-danger fs-6 ms-1">*</span></label>
                           <div class="input-group">
                             <input type="number"
@@ -174,12 +174,31 @@
                             <span class="input-group-text">@lang('app.DZD')</span>
                           </div>
                         </div>
-                        <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                          <label class="form-label" for="form-repeater-1-3">@lang('assurance::app.image')</label>
-                          <input type="file" id="form-repeater-1-2" name="image" class="form-control"
-                                 placeholder="@lang('assurance::app.image')" />
+                        <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
+                          <label class="form-label">@lang('assurance::app.image')</label>
+                          <div class="image-picker d-flex align-items-center gap-1 flex-wrap" style="min-height: 38px;">
+                            <img class="image-picker-preview rounded-2 bg-label-secondary" src="" alt=""
+                                 style="height: 36px; width: 36px; object-fit: cover; display: none;">
+                            <button type="button" class="btn btn-outline-primary image-picker-choose">
+                              <i class="bx bx-image-add"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger image-picker-remove" style="display: none;">
+                              <i class="bx bx-trash"></i>
+                            </button>
+                            <input type="file" name="image" class="image-picker-input" accept="image/*" hidden>
+                          </div>
                         </div>
-                        <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                        <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
+                          <label class="form-label">@lang('assurance::app.pdfs')</label>
+                          <div class="pdf-picker d-flex align-items-center gap-1 flex-wrap" style="min-height: 38px;">
+                            <button type="button" class="btn btn-outline-primary pdf-picker-choose">
+                              <i class="bx bxs-file-pdf"></i>
+                            </button>
+                            <div class="pdf-picker-list d-flex flex-wrap gap-1"></div>
+                            <input type="file" name="pdfs" class="pdf-picker-input" accept="application/pdf" multiple hidden>
+                          </div>
+                        </div>
+                        <div class="mb-3 col-lg-6 col-xl-2 col-12 d-flex align-items-center mb-0">
                           <button type="button" class="btn btn-label-danger mt-4" data-repeater-delete>
                             <i class="bx bx-x me-1"></i>
                             <span class="align-middle">@lang('app.delete')</span>
@@ -208,23 +227,104 @@
         @section('scripts')
           <script>
             $(document).ready(function() {
-              bindServiceSelectEvents();
+              updateTotalPrice();
 
-              // Re-bind after adding a new item
-              $('[data-repeater-create]').on('click', function() {
-                setTimeout(bindServiceSelectEvents, 100); // Wait for new DOM
+              // When a service is selected, fill name/price and refresh the total.
+              $(document).on('change', 'select[name^="services"][name$="[service_id]"]', function() {
+                const $option = $(this).find('option:selected');
+                const name = $option.data('name') || '';
+                const price = $option.data('price') || '';
+
+                const $repeaterItem = $(this).closest('[data-repeater-item]');
+                $repeaterItem.find('input[name$="[service_name]"]').val(name);
+                $repeaterItem.find('input[name$="[service_price]"]').val(price);
+                updateTotalPrice();
               });
 
-              function bindServiceSelectEvents() {
-                $('select[name^="services"][name$="[service_id]"]').off('change').on('change', function() {
-                  const $option = $(this).find('option:selected');
-                  const name = $option.data('name') || '';
-                  const price = $option.data('price') || '';
+              // Recalculate the total whenever a service price is edited manually.
+              $(document).on('input change', 'input[name^="services"][name$="[service_price]"]', updateTotalPrice);
 
-                  const $repeaterItem = $(this).closest('[data-repeater-item]');
-                  $repeaterItem.find('input[name$="[service_name]"]').val(name);
-                  $repeaterItem.find('input[name$="[service_price]"]').val(price);
-                  updateTotalPrice();
+              // Custom image picker.
+              $(document).on('click', '.image-picker-choose', function() {
+                $(this).closest('.image-picker').find('.image-picker-input').trigger('click');
+              });
+
+              $(document).on('change', '.image-picker-input', function() {
+                const $picker = $(this).closest('.image-picker');
+                const $preview = $picker.find('.image-picker-preview');
+                const $remove = $picker.find('.image-picker-remove');
+
+                if (this.files && this.files[0]) {
+                  const reader = new FileReader();
+                  reader.onload = function(e) {
+                    $preview.attr('src', e.target.result).show();
+                    $remove.show();
+                  };
+                  reader.readAsDataURL(this.files[0]);
+                }
+              });
+
+              $(document).on('click', '.image-picker-remove', function() {
+                const $picker = $(this).closest('.image-picker');
+                $picker.find('.image-picker-input').val('');
+                $picker.find('.image-picker-preview').attr('src', '').hide();
+                $(this).hide();
+              });
+
+              // Custom multi-file PDF picker.
+              $(document).on('click', '.pdf-picker-choose', function() {
+                $(this).closest('.pdf-picker').find('.pdf-picker-input').trigger('click');
+              });
+
+              $(document).on('change', '.pdf-picker-input', function() {
+                renderPdfList($(this).closest('.pdf-picker'));
+              });
+
+              $(document).on('click', '.pdf-picker-remove', function() {
+                const $picker = $(this).closest('.pdf-picker');
+                const $input = $picker.find('.pdf-picker-input');
+                const index = $(this).data('index');
+                const dataTransfer = new DataTransfer();
+
+                Array.from($input[0].files).forEach(function(file, i) {
+                  if (i !== index) {
+                    dataTransfer.items.add(file);
+                  }
+                });
+
+                $input[0].files = dataTransfer.files;
+                renderPdfList($picker);
+              });
+
+              function renderPdfList($picker) {
+                const $input = $picker.find('.pdf-picker-input');
+                const $list = $picker.find('.pdf-picker-list');
+                const files = Array.from($input[0].files || []);
+
+                $list.empty();
+                files.forEach(function(file, index) {
+                  $list.append(
+                    $('<span>')
+                      .addClass('badge bg-label-secondary d-inline-flex align-items-center gap-1')
+                      .append($('<i>').addClass('bx bxs-file-pdf'))
+                      .append(
+                        $('<span>')
+                          .text(file.name)
+                          .attr('title', file.name)
+                          .css({
+                            maxWidth: '90px',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                          })
+                      )
+                      .append(
+                        $('<button>')
+                          .attr('type', 'button')
+                          .addClass('btn-close pdf-picker-remove')
+                          .data('index', index)
+                      )
+                  );
                 });
               }
 

@@ -30,9 +30,10 @@ class ExaminationDatatable
   {
     try {
       return datatables($this->query($request, $userId))
-        ->addColumn("action", function (MedicalExamination $model) {
+        ->addColumn("action", function (MedicalExamination $model) use ($userId) {
           return $this
 //            ->edit(route("patients.examinations.edit", [$model->familyMember->user->id, $model->id]), Auth::user()->hasPermissionTo(PermissionNames::MANAGE_EXAMINATIONS))
+            ->show(route("patients.examinations.show", [$userId, $model->id]), Auth::user()->hasPermissionTo(PermissionNames::MANAGE_EXAMINATIONS))
             ->delete($model->id, Auth::user()->hasPermissionTo(PermissionNames::MANAGE_EXAMINATIONS))
             ->makeLabelledIcons();
         })

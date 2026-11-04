@@ -56,6 +56,25 @@ class ExaminationsController extends Controller
     ]);
   }
 
+  public function show($userId, $id)
+  {
+    if (!auth()->user()->hasPermissionTo(PermissionNames::MANAGE_PATIENTS)) {
+      return redirect()->route('unauthorized');
+    }
+
+    $user = User::findOrFail($userId);
+    $examination = MedicalExamination::with(['familyMember', 'examinationServices.media'])
+      ->whereHas('familyMember', function ($query) use ($userId) {
+        $query->where('user_id', $userId);
+      })
+      ->findOrFail($id);
+
+    return view("assurance::examination.show")->with([
+      "user" => $user,
+      "examination" => $examination,
+    ]);
+  }
+
   public function store($userId, CreateExaminationRequest $request)
   {
     if (!auth()->user()->hasPermissionTo(PermissionNames::MANAGE_PATIENTS)) {
@@ -86,6 +105,10 @@ class ExaminationsController extends Controller
 
         if (isset($service['image']) && $service['image']) {
           storeWebPWithSpatie($model, $service['image'], ExaminationService::IMAGE);
+        }
+
+        foreach ($service['pdfs'] ?? [] as $pdf) {
+          $model->addMedia($pdf)->toMediaCollection(ExaminationService::PDF);
         }
 
       }
@@ -136,6 +159,7 @@ class ExaminationsController extends Controller
       })->findOrFail($id);
       $examination->examinationServices()->each(function ($service) {
         $service->clearMediaCollection(ExaminationService::IMAGE);
+        $service->clearMediaCollection(ExaminationService::PDF);
         $service->delete();
       });
       $examination->delete();

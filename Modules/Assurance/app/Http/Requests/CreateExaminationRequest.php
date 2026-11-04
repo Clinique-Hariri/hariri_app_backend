@@ -20,6 +20,8 @@ class CreateExaminationRequest extends FormRequest
       'services.*.service_name' => ['required', 'string', 'max:255'],
       'services.*.service_price' => ['required', 'numeric', 'min:0'],
       'services.*.image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:8192'],
+      'services.*.pdfs' => ['nullable', 'array'],
+      'services.*.pdfs.*' => ['file', 'mimes:pdf', 'max:20480'],
     ];
   }
 

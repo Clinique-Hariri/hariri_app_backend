@@ -13,6 +13,7 @@ class ExaminationService extends Model implements HasMedia
   protected $table = 'examination_service';
 
   const IMAGE = 'image';
+  const PDF = 'pdf';
 
   protected $fillable = [
     'service_name',
@@ -39,5 +40,7 @@ class ExaminationService extends Model implements HasMedia
   {
     $this->addMediaCollection(self::IMAGE)
       ->singleFile();
+
+    $this->addMediaCollection(self::PDF);
   }
 }

@@ -12,11 +12,13 @@ class ExaminationServiceResource extends JsonResource
   public function toArray(Request $request): array
   {
     $image = $this->getFirstMediaUrl(ExaminationService::IMAGE);
+    $pdfs = $this->getMedia(ExaminationService::PDF)->map(fn ($media) => $media->getUrl())->values();
     return [
       'id' => $this->id,
       'service_name' => $this->service_name,
       'service_price' => $this->service_price,
       'image' => $image !== "" ? $image : null,
+      'pdfs' => $pdfs,
       'created_at' => $this->created_at,
       'updated_at' => $this->updated_at,
 
