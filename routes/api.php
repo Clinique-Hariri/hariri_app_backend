@@ -9,6 +9,7 @@ use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\SettingController;
 use App\Http\Controllers\API\FirebaseController;
 use App\Http\Controllers\API\NotificationsController;
+use App\Http\Controllers\API\DeviceTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,8 @@ Route::prefix('v1')->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('delete-account', [AuthController::class, 'deleteAccount'])->middleware('auth:sanctum');
     Route::post('update-account', [AuthController::class, 'updateAccount'])->middleware('auth:sanctum');
+    Route::post('device-tokens', [DeviceTokenController::class, 'store'])->middleware('auth:sanctum');
+    Route::delete('device-tokens', [DeviceTokenController::class, 'destroy'])->middleware('auth:sanctum');
   });
 
   Route::prefix('home')->group(function () {

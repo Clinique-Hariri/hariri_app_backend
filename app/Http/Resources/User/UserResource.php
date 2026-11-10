@@ -29,7 +29,6 @@ class UserResource extends JsonResource
             'is_insured' => $this->is_insured,
             'insurance_date' => $this->insurance_date,
             'wallet_balance' => $this->wallet_balance,
-            'device_token' => $this->device_token,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

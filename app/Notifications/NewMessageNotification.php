@@ -58,11 +58,16 @@ class NewMessageNotification extends Notification implements ShouldQueue
       $via[] = 'database';
     }
 
-    if (in_array('fcm', $this->channels) && $notifiable->device_token) {
+    if (in_array('fcm', $this->channels) && $this->hasDeviceTokens($notifiable)) {
       $via[] = 'fcm';
     }
 
     return $via;
+  }
+
+  protected function hasDeviceTokens($notifiable): bool
+  {
+    return method_exists($notifiable, 'deviceTokens') && $notifiable->deviceTokens()->exists();
   }
 
   public function toDatabase($notifiable): array
@@ -110,7 +115,7 @@ class NewMessageNotification extends Notification implements ShouldQueue
       ],
     ]);
 
-    return CloudMessage::withTarget('token', $notifiable->device_token)
+    return CloudMessage::new()
       ->withNotification($notification)
       ->withData($this->data)
       ->withAndroidConfig($androidConfig)

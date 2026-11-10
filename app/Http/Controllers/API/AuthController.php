@@ -13,17 +13,23 @@ use App\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
+use App\Services\DeviceTokenService;
 
 class AuthController extends Controller
 {
   use FirebaseTrait, ApiResponseTrait, RandomTrait;
+
+  public function __construct(private DeviceTokenService $deviceTokens)
+  {
+  }
 
   public function login(Request $request)
   {
 
     $this->validateRequest($request, [
       'id_token' => 'required|string',
-      'device_token' => 'sometimes|string',
+      'device_token' => 'sometimes|string|max:512',
+      'platform' => 'nullable|string|in:android,ios,web',
     ]);
 
     try {
@@ -39,9 +45,9 @@ class AuthController extends Controller
         ]
       )->refresh();
 
-      $user->update([
-        'device_token' => $request->device_token?? null,
-      ]);
+      if ($request->filled('device_token')) {
+        $this->deviceTokens->register($user, $request->device_token, $request->platform);
+      }
 
       $token = $user->createToken($this->random(8))->plainTextToken;
 
@@ -60,6 +66,10 @@ class AuthController extends Controller
   public function logout(Request $request)
   {
     try {
+
+      if ($request->filled('device_token')) {
+        $this->deviceTokens->unregister($request->user(), $request->device_token);
+      }
 
       $request->user()->currentAccessToken()->delete();
 

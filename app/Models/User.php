@@ -56,7 +56,6 @@ class User extends Authenticatable implements HasMedia
     'passport_number',
     'insurance_number',
     'wallet_balance',
-    'device_token',
   ];
 
   /**
@@ -107,6 +106,11 @@ class User extends Authenticatable implements HasMedia
   public function notifications(): MorphMany
   {
     return $this->morphMany(\App\Models\Notification::class, 'notifiable');
+  }
+
+  public function deviceTokens(): HasMany
+  {
+    return $this->hasMany(DeviceToken::class);
   }
 
   public function unreadNotifications()
