@@ -24,6 +24,7 @@ use App\Http\Controllers\API\DeviceTokenController;
 Route::get('/get-access-token', [FcmController::class, 'getAccessToken']);
 Route::post('/send-to-device', [FcmController::class, 'sendToDevice']);
 Route::post('/send-to-multiple', [FcmController::class, 'sendToMultiple']);
+Route::post('/send-to-user', [FcmController::class, 'sendToUser']);
 Route::post('/send-to-topic', [FcmController::class, 'sendToTopic']);
 Route::post('/send-to-condition', [FcmController::class, 'sendToCondition']);
 Route::post('/send-data-message', [FcmController::class, 'sendDataMessage']);

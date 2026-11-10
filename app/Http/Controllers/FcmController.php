@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\FcmService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,42 @@ class FcmController extends Controller
             'Bulk Notification',
             'This goes to multiple devices'
         );
+    }
+
+    public function sendToUser(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'title' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'body' => ['sometimes', 'nullable', 'string', 'max:1000'],
+            'data' => ['sometimes', 'array'],
+        ]);
+
+        $user = User::findOrFail($validated['user_id']);
+        $tokens = $user->deviceTokens()->pluck('token');
+
+        if ($tokens->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User has no registered device tokens.',
+            ], 404);
+        }
+
+        $fcmService = new FcmService();
+
+        $result = $fcmService->sendToMultipleDevices(
+            $tokens->all(),
+            $validated['title'] ?? 'Hello World',
+            $validated['body'] ?? 'This is a test notification',
+            $validated['data'] ?? ['key' => 'value'],
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'user_id' => $user->id,
+            'tokens_count' => $tokens->count(),
+            'results' => $result['results'],
+        ]);
     }
 
     public function sendToTopic(Request $request)
